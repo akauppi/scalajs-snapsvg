@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Clock example (scalajs-snapsvg)</title>
+    <script type="text/javascript" src="target/scala-2.11/example-jsdeps.js"></script>
+    <script type="text/javascript" src="target/scala-2.11/example-fastopt.js"></script>
+    <style media="screen">
+    body {
+        background: #fff;
+    }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // Note: for some reason simply assigning to the function does not work
+      //
+      //window.onload = akauppi.scalajs.snapsvg.example.ClockApp().main;   // does not work
+
+      window.onload = function() { akauppi.scalajs.snapsvg.example.ClockApp().main(); }
+    </script>
+  </body>
+</html>
