@@ -1,7 +1,7 @@
 /*
 * Clock.scala
 *
-* Adaptation of the Snap.svg clock demo: 
+* Adaptation of the Snap.svg demo:
 *   https://github.com/adobe-webplatform/Snap.svg/blob/master/demos/clock/index.html
 *
 * Copyright © 2013 Adobe Systems Incorporated. All rights reserved.
@@ -22,6 +22,7 @@
 package akauppi.scalajs.snapsvg.example
 
 import scala.scalajs.js
+import js.JSConverters._
 
 import akauppi.scalajs.snapsvg._
 
@@ -34,14 +35,13 @@ object ClockApp extends js.JSApp {
     val s = Snap(600, 600)
     var path = ""
 
-    val nums = s.text( 300, 300, ((1 to 12).map(_.toString)).toArray ).attr( js.Dictionary[js.Any](
+    val nums = s.text( 300, 300, ((1 to 12).map(_.toString)).toJSArray ).attr( js.Dictionary[js.Any](   // tbd: why not just 'js.Dictionary( ...' ? (note: many such places)
           "font" -> "300 40px Helvetica Neue",
           "textAnchor" -> "middle"
         ))
 
     for( i <- 0 to 71 ) {
       val r = if (i % 6 == 0) 230 else if (i % 3 == 0) 240 else 247
-
       val y = sin( Snap.rad(5*i) )
       val x = cos( Snap.rad(5*i) )
       
@@ -79,7 +79,7 @@ object ClockApp extends js.JSApp {
       "fillOpacity" -> 0
     ))
     
-    circ.click( () => {    // tbd: can we just have '{...}' instead of '() => {...}'
+    circ.click( () => {    // tbd: can we just have '{...}' instead of '() => {...}' (but yet run it at callback time)
       Snap.animate(0, 2*PI, (rad: Double) => {
         val t= s"t${210*cos(rad+PI/2)},${210*sin(rad+PI/2)}"
         table.transform( t )

@@ -110,7 +110,8 @@ object ScalajsSnapSVG extends Build {
       libraryDependencies ++= Seq(
         //"org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
         //"com.scalatags" %%% "scalatags" % "0.3.5"
-      ))
+      )
+    )
 
   lazy val scalaesque = project
     .configure(commonSettings, publicationSettings)
@@ -123,6 +124,12 @@ object ScalajsSnapSVG extends Build {
     .settings(name := "test")
 
   lazy val example = project
-    .dependsOn(core)
     .configure(commonSettings, useSnap(), preventPublication)
+    .dependsOn(core)
+    .settings(
+      name := "example",
+      libraryDependencies ++= Seq(
+        "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6"
+      )
+    )
 }

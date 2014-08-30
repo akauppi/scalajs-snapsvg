@@ -764,7 +764,7 @@ trait SnapPaper extends js.Object {
 *
 * Scalaesque: an object, no inheritance from 'js.Object' (hmm, should we do so even here?) tbd
 */
-trait SnapMina extends js.Object {
+trait mina extends js.Object {
   def time: Double = ???    // tbd. maybe it returns 'Long'?
   def getById(id: String): SnapAnimDescriptor = ???
 

@@ -13,10 +13,9 @@
   </head>
   <body>
     <script type="text/javascript">
-      // Note: for some reason simply assigning to the function does not work
-      //
-      //window.onload = akauppi.scalajs.snapsvg.example.ClockApp().main;   // does not work
-
+      // Note: Must run the 'ClockApp()' only after things have properly loaded (e.g. a plain
+      //    'window.onload = ...ClockApp().main' does not work).
+      //      
       window.onload = function() { akauppi.scalajs.snapsvg.example.ClockApp().main(); }
     </script>
   </body>
