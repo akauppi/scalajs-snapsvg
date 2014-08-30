@@ -67,12 +67,16 @@ object ScalajsSnapSVG extends Build {
           </developer>
         </developers>)
 
+  // Upgraded "0.1.8" -> "0.2.3" for Scala.js 0.5.4 (see http://www.scala-js.org/news/2014/08/29/announcing-scalajs-0.5.4/)
+  //    NOTE: also 'project/plugins.scala' needs to have the same version number!!! AK300814
+  //
   def utestSettings: PE =
     _.settings(utest.jsrunner.Plugin.utestJsSettings: _*)
       .configure(useSnap("test"))
       .settings(
-        libraryDependencies += "com.lihaoyi" %%% "utest" % "0.1.8" % "test",
-        requiresDOM := true,
+        libraryDependencies += "com.lihaoyi" %%% "utest" % "0.2.3" % "test",
+        requiresDOM := true,    // Note tbd: Scala.js 0.5.4 introduces dependency on 'RuntimeDOM' that is supposed to be used instead of this
+                                //       e.g. "jsDependencies += scala.scalajs.sbtplugin.RuntimeDOM"
         jsEnv in Test := customPhantomJSEnv)
 
   def customPhantomJSEnv: PhantomJSEnv = {
