@@ -95,7 +95,7 @@ object Snap extends js.Object {
   //
   // Scalaesque: Make deprecated, point at using string interpolation or '.format' instead.
   //
-  def format( token: String, json: js.Dictionary[js.Any] ): String = ???
+  def format( token: String, json: js.Object ): String = ???
 
   // Scalaesque: Make deprecated, point at using 'Math.toRadians()' and 'Math.toDegrees()' instead
   //
@@ -162,7 +162,7 @@ object Snap extends js.Object {
   //
   // TBD: What is the return type ? "animation object" what fields?
   //
-  def animation( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: js.Function1[Double,Double], callback: js.Function /*tbd: precisely?*/ ): SnapAnimMina = ???
+  def animation( attr: js.Object, duration: Int /*ms*/, easing: js.Function1[Double,Double], callback: js.Function /*tbd: precisely?*/ ): SnapAnimMina = ???
   
   def animate( from: Double, to: Double, setter: js.Function1[Double,_], duration: Int /*ms*/, easing: js.Function1[Double,Double], callback: js.Function /*tbd: precisely?*/ ): SnapAnimMina = ???
   def animate( from: Double, to: Double, setter: js.Function1[Double,_], duration: Int /*ms*/, easing: js.Function1[Double,Double] ): SnapAnimMina = ???
@@ -191,7 +191,7 @@ object Snap extends js.Object {
   //
   // tbd: callback parameters?
   //
-  def ajax( url: String, postData: js.Dictionary[String], callback: => Unit, scope: js.Object ): js.Object = ???
+  def ajax( url: String, postData: js.Object, callback: => Unit, scope: js.Object ): js.Object = ???
   def ajax( url: String, postData: String, callback: => Unit, scope: js.Object ): js.Object = ???
   def ajax( url: String, callback: => Unit, scope: js.Object ): js.Object = ???
 
@@ -278,7 +278,7 @@ trait SnapElement extends js.Object {
   //          'attr' way could be preserved as a syntax middle stop ('el.attr.color = ') or simply
   //          bypassed ('el.color = '). 'Attr' is still useful for setting multiple attributes at once.
   //
-  def attr( map: js.Dictionary[js.Any] ): this.type = ???   // returns "the current element"
+  def attr( map: js.Object ): this.type = ???   // returns "the current element"
   def attr( key: String ): js.Any = ???               // get an attribute (would that always be 'String' or can it be 'Number' / 'Boolean'?
 
   def getBBox: SnapBBox = ???
@@ -383,9 +383,9 @@ trait SnapElement extends js.Object {
   //        use of Duration type
   //        could use composition ('.easing') or named parameters for 'easing' and 'callback'
   //
-  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/ ): this.type = ???
-  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: js.Function1[Double,Double] ): this.type = ???
-  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: js.Function1[Double,Double], callback: js.Function0[_] ): this.type = ???
+  def animate( attr: js.Object, duration: Int /*ms*/ ): this.type = ???
+  def animate( attr: js.Object, duration: Int /*ms*/, easing: js.Function1[Double,Double] ): this.type = ???
+  def animate( attr: js.Object, duration: Int /*ms*/, easing: js.Function1[Double,Double], callback: js.Function0[_] ): this.type = ???
     // tbd: what is the parameter for 'callback'?
 
   // Scalaesque: do we even need these? Doesn't Scala provide enough data connection mechanisms?
@@ -669,7 +669,7 @@ trait SnapPaper extends js.Object {
 
   // SNAPSVG API inconsistency: doc says "and no attributes" but there's an attribute parameter.
   //
-  def el( name: String, attr: js.Dictionary[js.Any] ): SnapElement = ???
+  def el( name: String, attr: js.Object ): SnapElement = ???
   
   // Better to let actual SnapSvg handle default values.
   //
@@ -984,7 +984,7 @@ trait SnapSet extends js.Object {
   // Scalaesque: 'attr' can work on the known set (and types) of attributes
   //            - use of Duration class
   //
-  def animate( attr: js.Dictionary[js.Any], duration: Int, easing_f: js.Function1[Double,Double], callback: js.Function0[_] ): SnapElement = ???
+  def animate( attr: js.Object, duration: Int, easing_f: js.Function1[Double,Double], callback: js.Function0[_] ): SnapElement = ???
 
   // This version would animate the set's contents separately - 1st param for 1st entry, and so forth..
   // Is this really neeeded and useful in reality. Multiple sets would do the same.

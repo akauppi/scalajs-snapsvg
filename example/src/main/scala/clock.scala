@@ -23,6 +23,7 @@ package akauppi.scalajs.snapsvg.example
 
 import scala.scalajs.js
 import js.JSConverters._
+import js.Dynamic.{literal => JSliteral}
 
 import akauppi.scalajs.snapsvg._
 
@@ -35,7 +36,7 @@ object ClockApp extends js.JSApp {
     val s = Snap(600, 600)
     var path = ""
 
-    val nums = s.text( 300, 300, ((1 to 12).map(_.toString)).toJSArray ).attr( js.Dictionary[js.Any](   // tbd: why not just 'js.Dictionary( ...' ? (note: many such places)
+    val nums = s.text( 300, 300, ((1 to 12).map(_.toString)).toJSArray ).attr( JSliteral(
           "font" -> "300 40px Helvetica Neue",
           "textAnchor" -> "middle"
         ))
@@ -51,29 +52,29 @@ object ClockApp extends js.JSApp {
 
         nums.select(s"tspan:nth-child(${i/6+1})")
         
-        nums.select(s"tspan:nth-child(${i/6+1})").attr( js.Dictionary[js.Any](
+        nums.select(s"tspan:nth-child(${i/6+1})").attr( JSliteral(
           "x" -> (300 + 200 * cos(rad)),
           "y" -> (300 + 200 * sin(rad) + 15)
         ))
       }
     }
 
-    val table = s.g(nums, s.path(path).attr( js.Dictionary[js.Any](
+    val table = s.g(nums, s.path(path).attr( JSliteral(
       "fill" -> "none",
       "stroke" -> "#000",
       "strokeWidth" -> 2
-    ))).attr( js.Dictionary[js.Any](
+    ))).attr( js.Dynamic.literal(
       "transform" -> "t0,210"
     ))
-    s.g(table).attr( js.Dictionary[js.Any](
+    s.g(table).attr( js.Dynamic.literal(
       "clip" -> s.circle(300, 300, 100)
     ))
-    val hand = s.line(300, 200, 300, 400).attr( js.Dictionary[js.Any](
+    val hand = s.line(300, 200, 300, 400).attr( js.Dynamic.literal(
       "fill" -> "none",
       "stroke" -> "#f63",
       "strokeWidth" -> 2
     ))
-    val circ= s.circle(300, 300, 100).attr( js.Dictionary[js.Any](
+    val circ= s.circle(300, 300, 100).attr( js.Dynamic.literal(
       "stroke" -> "#000",
       "strokeWidth" -> 10,
       "fillOpacity" -> 0

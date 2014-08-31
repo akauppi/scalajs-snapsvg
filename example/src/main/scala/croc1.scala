@@ -55,16 +55,16 @@ object Croc1App extends js.JSApp /*with WindowTimers*/ {    // tbd. how are we s
       clearTimeout(timer)
       console.log("close"); 
 
-      head.animate( js.Dictionary[js.Any](
+      head.animate( js.Dynamic.literal(
           "transform" -> s"r8,${pivot_head}"
       ), 500, mina.backin _)    // tbd. Scalaesque: let's make it so the '_' are not needed 
 
-      jaw.animate( js.Dictionary[js.Any](
+      jaw.animate( js.Dynamic.literal(
           "transform" -> s"r37,${pivot_jaw}"
       ), 500, mina.backin _)
 
       timer = setTimeout( () => {
-        symbol.animate( js.Dictionary[js.Any](
+        symbol.animate( js.Dynamic.literal(
           "transform" -> "t-70,40r40"
         ), 100 )
       }, 400 )
@@ -74,15 +74,15 @@ object Croc1App extends js.JSApp /*with WindowTimers*/ {    // tbd. how are we s
       clearTimeout(timer)
       console.log( "open" )
 
-      head.animate( js.Dictionary[js.Any](
+      head.animate( js.Dynamic.literal(
           "transform" -> s"r0,${pivot_head}"
       ), 700, mina.elastic _)
 
-      jaw.animate( js.Dictionary[js.Any](
+      jaw.animate( js.Dynamic.literal(
           "transform" -> s"r0,${pivot_jaw}"
       ), 700, mina.elastic _)
 
-      symbol.animate( js.Dictionary[js.Any](
+      symbol.animate( js.Dynamic.literal(
           "transform" -> "t0,0r0"
       ), 500, mina.elastic _)
     }
