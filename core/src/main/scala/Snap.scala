@@ -64,6 +64,14 @@ import js.annotation.JSName
 *   on the site: http://snapsvg.io/docs/ Why is that? AK030814
 */
 
+/* Scala note:
+*
+* Use of 'js.Function0[_]' instead of 'js.Function0[Unit]' for functions whose return value
+* is not meant to be consumed allows any functions to be given. Without this, the last expression
+* of the function bodies would need to be '()', creating the 'Unit'. (Thanks for Sébastien on 
+* Scala.js mailing list for clarifying this - it is a normal Scala feature, though). AK310814
+*/
+
 /*
 * This is the main 'Snap.*' namespace, mapped in the 'package.scala' file.
 *
@@ -213,7 +221,7 @@ object Snap extends js.Object {
 
   // SNAPSVG API AMBIGUITY: Should it be 'Snap.mina' in the docs, now just 'mina' (where does it belong to?)
   //
-  def mina( a: Double, A: Double, b: Double, B: Double, get: => Double, set: (Double) => Unit, easing: Double => Double ): SnapAnimDescriptor = ???
+  def mina( a: Double, A: Double, b: Double, B: Double, get: => Double, set: (Double) => Unit, easing: js.Function1[Double,Double] ): SnapAnimDescriptor = ???
 
   val filter= SnapStaticFilter
   val path= SnapStaticPath
@@ -376,8 +384,8 @@ trait SnapElement extends js.Object {
   //        could use composition ('.easing') or named parameters for 'easing' and 'callback'
   //
   def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/ ): this.type = ???
-  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: Double => Double ): this.type = ???
-  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: Double => Double, callback: => Unit ): this.type = ???
+  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: js.Function1[Double,Double] ): this.type = ???
+  def animate( attr: js.Dictionary[js.Any], duration: Int /*ms*/, easing: js.Function1[Double,Double], callback: js.Function0[_] ): this.type = ???
     // tbd: what is the parameter for 'callback'?
 
   // Scalaesque: do we even need these? Doesn't Scala provide enough data connection mechanisms?
@@ -436,8 +444,8 @@ trait SnapElement extends js.Object {
   
   // Scalaesque: do we need the context parameters?
   //
-  def hover( f_in: => Unit, f_out: => Unit, icontext: js.Object = null, ocontext: js.Object = null ): this.type = ???
-  def unhover( f_in: => Unit, f_out: => Unit ): this.type = ???
+  def hover( f_in: js.Function0[_], f_out: js.Function0[_], icontext: js.Object = null, ocontext: js.Object = null ): this.type = ???
+  def unhover( f_in: js.Function0[_], f_out: js.Function0[_] ): this.type = ???
 
   // SNAPSVG API consistency: 'undrag' is not defined like other 'un...' functions.
   //          It does not take parameters, but removes all drag associations.
@@ -543,7 +551,7 @@ trait SnapAnimMina extends js.Object
 {
   val id: String
   val duration: js.Function1[Int,Int]   // "gets or sets the duration of the animation" (dynamic function, gets either 0 or 1 params)
-  val easing: Double => Double
+  val easing: js.Function1[Double,Double]
   val speed: js.Function        // "gets or sets the speed of the animation"
   val status: js.Function       // "gets or sets the status of the animation"
   val stop: => Unit             // "stops the animation"
@@ -571,7 +579,7 @@ trait SnapAnimDescriptor extends js.Object
     val spd: Double
     val get: => Double
     val set: Double => Unit
-    val easing: Double => Double      (Scalaesque: make a separate 'EasingFunc' alias)
+    val easing: js.Function1[Double,Double]      (Scalaesque: make a separate 'EasingFunc' alias)
     val status: js.Function         // "getter/setter" so params vary, Scalaesque: do as getter/setter of a value
     val speed: js.Function          // -''-
     val duration: js.Function       // -''-
@@ -763,8 +771,10 @@ trait SnapPaper extends js.Object {
 * mina
 *
 * Scalaesque: an object, no inheritance from 'js.Object' (hmm, should we do so even here?) tbd
+*
+* tbd. having 'object' makes this compile (for Croc1 demo), but it's really a namespace. Which one is "right" in Scala.js point of view? AK310814
 */
-trait mina extends js.Object {
+object mina extends js.Object {
   def time: Double = ???    // tbd. maybe it returns 'Long'?
   def getById(id: String): SnapAnimDescriptor = ???
 
@@ -974,7 +984,7 @@ trait SnapSet extends js.Object {
   // Scalaesque: 'attr' can work on the known set (and types) of attributes
   //            - use of Duration class
   //
-  def animate( attr: js.Dictionary[js.Any], duration: Int, easing_f: Double => Double, callback: => Unit ): SnapElement = ???
+  def animate( attr: js.Dictionary[js.Any], duration: Int, easing_f: js.Function1[Double,Double], callback: js.Function0[_] ): SnapElement = ???
 
   // This version would animate the set's contents separately - 1st param for 1st entry, and so forth..
   // Is this really neeeded and useful in reality. Multiple sets would do the same.

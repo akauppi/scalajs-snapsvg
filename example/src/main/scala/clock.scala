@@ -79,13 +79,13 @@ object ClockApp extends js.JSApp {
       "fillOpacity" -> 0
     ))
     
-    circ.click( () => {    // tbd: can we just have '{...}' instead of '() => {...}' (but yet run it at callback time)
+    circ.click{ () =>
       Snap.animate(0, 2*PI, (rad: Double) => {
         val t= s"t${210*cos(rad+PI/2)},${210*sin(rad+PI/2)}"
         table.transform( t )
         hand.transform( s"r${ Snap.deg(rad) },300,300")
       } , 12000 )
-    } )
+    }
   }    
 }
 
